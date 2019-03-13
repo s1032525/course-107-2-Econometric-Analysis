@@ -54,6 +54,11 @@ data("Journals")
 # 資料處理：產生新變數 dplyr::mutate
 
 ```{r ch2-summary, results='hide'}
+#如果照他的指示的話
+mutate(Journals,citeprice=price/citations)->journals
+#用pipe
+Journals %>% mutate(citeprice=price/citations)->journals
+
 
 
 ```
