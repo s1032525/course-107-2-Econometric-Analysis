@@ -68,11 +68,21 @@ Journals %>% mutate(citeprice=price/citations)->journals
 > 期刊的價格(citeprice，平均文獻引用價格)如何影響其圖書館訂閱量(subs)? 
 
 ```{r ols-paircorr-r, echo=TRUE}
-
+library (psych)
+journals %>% select(citeprice,subs)%>%
+  pairs.panels()
+```
+```{r}
+#pipe
+journals%>%select(citeprice,subs
 ```
 
 
 ```{r ols-paircorr2-r}
+#一般用法
+select(journals,citeprice,subs)->tempDF
+#pipe用法
+journals%>% select(citeprice,subs)->tempDF
 
 ```
 
