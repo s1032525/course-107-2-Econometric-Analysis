@@ -74,7 +74,8 @@ journals %>% select(citeprice,subs)%>%
 ```
 ```{r}
 #pipe
-journals%>%select(citeprice,subs
+journals%>%select(citeprice,subs)%>%
+mutate_all(log)%>% pairs.panels() #改變所有變數改成LOG
 ```
 
 
@@ -87,6 +88,7 @@ journals%>% select(citeprice,subs)->tempDF
 ```
 
 > 為什麼取log後，兩者的相關度變高？它表示兩個變數變得更不獨立嗎？
+取log因為變線性，所以相關度變高
 
 # 效應評估
 
