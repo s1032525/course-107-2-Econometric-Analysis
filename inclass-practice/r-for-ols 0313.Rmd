@@ -78,6 +78,10 @@ journals%>%select(citeprice,subs)%>%
 mutate_all(log)%>% pairs.panels() #改變所有變數改成LOG
 ```
 
+```{r}
+
+```
+
 
 ```{r ols-paircorr2-r}
 #一般用法
@@ -113,12 +117,65 @@ journals%>% select(citeprice,subs)->tempDF
 # 複迴歸模型
 
 ```{r}
+a<- NA
+
+is.na(a)#就是不知道甚麼東西，要用這個去判斷
 
 
+```
+```{r}
+#傳統寫法
+lm(log(subs)~log(citeprice),data=journals)->mode11
+#pipe2
+journals %>%
+  lm(log(subs)~log(citeprice),data=.)->mode11
+
+journals %>%
+  lm(log(subs)~log(citeprice)+foundingyear,data=.)->mode12
+  
+  
+
+
+
+```
+```
+
+```{r}
+library(broom)
+```
+```{r}
+tidy(mode11)#估計係數的東西
+```
+
+```{r}
+augment(mode11)
+```
+```{r}
+glance(mode11)
 ```
 
 ## 模型比較
 
-```{r ols-comp-r, results='hide', warning=FALSE}
 
 ```
+
+```{r}
+library(sandwich)
+library(lmtest)
+library(stargazer)
+
+#使用vcovHC函數來計算HC1型的異質變異（即橫斷面資料下的線性迴歸模型）
+coeftest(mode11, vcov. = vcovHC, type="HC1") -> mode11_coeftest
+coeftest(mode12, vcov. = vcovHC, type="HC1") -> mode12_coeftest
+
+stargazer(mode11, mode12, 
+          se=list(mode11_coeftest[,"Std. Error"], mode12_coeftest[,2]),
+          type="html",
+          align=TRUE)
+```
+
+```{r}
+
+```
+
+
