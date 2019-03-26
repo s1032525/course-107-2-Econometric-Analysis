@@ -78,9 +78,6 @@ journals%>%select(citeprice,subs)%>%
 mutate_all(log)%>% pairs.panels() #改變所有變數改成LOG
 ```
 
-```{r}
-
-```
 
 
 ```{r ols-paircorr2-r}
@@ -119,13 +116,21 @@ journals%>% select(citeprice,subs)->tempDF
 ```{r}
 a<- NA
 
-is.na(a)#就是不知道甚麼東西，要用這個去判斷
+is.na(a)# NA的意思就是不知道甚麼東西，缺失數據。這個方法寫比較好
+a==NA #==是判斷某一樣東西的意思
 
 
 ```
+
+
 ```{r}
-#傳統寫法
-lm(log(subs)~log(citeprice),data=journals)->mode11
+#傳統寫法 ~是回歸模型等號的意思
+lm(log(subs)~log(citeprice),data=journals)->mode11 
+#HELP裡面的等號可以忽略，FORMULA是REGRESSION OPTIONAL也是可以忽略
+#Pipe1
+log(subs)~log(citeprice)%>%(data=journals)->mode11 
+#把formula移出來
+
 #pipe2
 journals %>%
   lm(log(subs)~log(citeprice),data=.)->mode11
@@ -138,7 +143,7 @@ journals %>%
 
 
 ```
-```
+
 
 ```{r}
 library(broom)
